@@ -22,10 +22,11 @@ app.delete('/deleteUser', function (req, res) {
        res.end( JSON.stringify(data));
    });
 })
-app.get('/listUsers', function (req, res) {
+app.get('/:listUsers', function (req, res) {
    fs.readFile( __dirname + "/" + "users.json", 'utf8', function (err, data) {
-       console.log(data);
-       res.end( JSON.stringify(data) );
+       users = JSON.parse(data);
+       console.log(users);
+       res.end( JSON.stringify(users) );
    });
 })
 
