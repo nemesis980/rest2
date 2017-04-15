@@ -2,33 +2,37 @@ var express = require('express');
 var app = express();
 var fs = require("fs");
 
-app.get('/:id', function (req, res) {
+app.get('/', function (req, res) {
+       res.end("Tu sam!");
+});
+app.get('/user/:id', function (req, res) {
    // First read existing users.
    fs.readFile( __dirname + "/" + "users.json", 'utf8', function (err, data) {
-       users = JSON.parse(data);
+       var users = JSON.parse(data);
+	   console.log(data);
        var user = users["user" + req.params.id] 
-       console.log( user );
        res.end( JSON.stringify(user));
    });
-})
+});
+
 app.delete('/deleteUser', function (req, res) {
 
    // First read existing users.
    fs.readFile( __dirname + "/" + "users.json", 'utf8', function (err, data) {
-       data = JSON.parse(data);
-       delete data["user" + 2];
-       
-       console.log( data );
-       res.end( JSON.stringify(data));
+       var users = JSON.parse(data);
+       delete users["user" + 2];
+       res.end( JSON.stringify(users));
    });
-})
+});
+
 app.get('/listUsers', function (req, res) {
    fs.readFile( __dirname + "/" + "users.json", 'utf8', function (err, data) {
-       users = JSON.parse(data);
-       console.log(users);
+	   console.log(data);
+       var users = JSON.parse(data);
+       console.log("yuS");
        res.end( JSON.stringify(users) );
    });
-})
+});
 
 var server = app.listen(8081, function () {
 
@@ -36,4 +40,4 @@ var server = app.listen(8081, function () {
   var port = server.address().port
   console.log("Example app listening at http://%s:%s", host, port)
 
-})
+});
